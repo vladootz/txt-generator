@@ -1,0 +1,107 @@
+body {
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    margin: 2rem auto;
+    justify-content: space-between;
+    text-align: center;
+    max-width: 960px;
+}
+
+.container > div {
+    width: 50%;
+}
+
+.container + .container {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+label {
+    cursor: pointer;
+    user-select: none;
+}
+
+input[type="text"] {
+    display: block;
+    right: 0;
+}
+
+.fields {
+    justify-content: center;
+    text-align: right;
+}
+
+.fields > div {
+    width: 200px;
+    text-align: left;
+}
+.fields > div:nth-child(2) {
+    margin-left: 2rem;
+    text-align: left;
+    width: 300px;
+}
+.fields > div input {
+    width: 100%;
+}
+
+.fields > div:last-child {
+    margin-left: 2rem;
+}
+
+.selectize-control {
+    margin-bottom: 0.8rem;
+}
+
+.selectize-input {
+    padding: 5px 8px;
+}
+
+.selectize-dropdown .create {
+    padding: 0.5rem;
+}
+
+.container + .generate {
+    margin-top: 4rem;
+}
+
+#lang,
+#generate {
+    margin-left: 2rem;
+}
+
+#clear,
+#clear + label {
+    width: auto;
+    display: inline-block;
+}
+
+.lds-dual-ring {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: none;
+    width: 64px;
+    height: 64px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid #dfc;
+    border-color: #dfc transparent #dfc transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

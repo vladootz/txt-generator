@@ -1,0 +1,61 @@
+body {
+    background: #333;
+    color: #EAEAEA;
+}
+
+input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], textarea, select {
+    background-color: #333;
+    border-color: #888;
+}
+
+.selectize-dropdown .active {
+    background: #666;
+    color: #FFF;
+}
+
+.selectize-input,
+.selectize-control.single .selectize-input.input-active,
+.selectize-dropdown,
+.selectize-input input {
+    background: #333;
+    color: #EAEAEA;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+button,
+.selectize-dropdown .create,
+.selectize-dropdown .create.active {
+    color: #FFF;
+}
+
+.button:hover, button:hover, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover, .button:focus, button:focus, input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus {
+    color: #EAEAEA;
+}
+
+.selectize-control.multi .selectize-input [data-value] {
+    color: #FFF;
+    border: 0px;
+    background-color: #555;
+    background-image: linear-gradient(to bottom, #777, #444);
+}
+
+.selectize-control.multi .selectize-input [data-value].active {
+    color: #eaeaea;
+    border: 0px;
+    background-color: #222;
+    background-image: linear-gradient(to bottom, #444, #000);
+}
+
+input[type="email"]:focus, input[type="number"]:focus, input[type="search"]:focus, input[type="text"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+    border-color: #fff;
+}
+
+.selectize-dropdown-header,
+.selectize-input,
+.selectize-dropdown
+{
+    border-color: #888;
+}
