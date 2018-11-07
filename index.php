@@ -76,6 +76,7 @@ foreach($values as $value) {
     $vals[$value['key']][] = $value['value'];
 }
 
+$ver = '0.1';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,7 +86,7 @@ foreach($values as $value) {
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/skeleton.css">
     <link rel="stylesheet" href="css/selectize.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css?v=<?php echo $ver; ?>">
     <link rel="stylesheet" href="<?php echo $dark ? 'css/dark.css' : ''; ?>" id="dark-theme" data-href="css/dark.css">
     <link rel="icon" type="image/ico" href="favicon.ico">
 </head>
@@ -158,7 +159,7 @@ foreach($values as $value) {
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/cookie.js"></script>
     <script type="text/javascript" src="js/selectize.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main.js?v=<?php echo $ver; ?>"></script>
 
     <script>
     window.addEventListener('load', function() {
