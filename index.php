@@ -1,8 +1,9 @@
 <?php
 if (isset($_POST['download']) && $_POST['download'] === 'file') {
-    $filename = $_POST['filename'];
+
+    $filename = $_POST['filename'][0].'_'.$_POST['filename'][1].'-'.$_POST['filename'][2];
     $i = 1;
-    $total_fields = count($_POST)-5;
+    $total_fields = (count($_POST)-3)/2;
     $txt = '';
     while ($i < $total_fields) {
         $j = $i > 9 ? $i : ' '.$i;
@@ -127,23 +128,28 @@ foreach($values as $value) {
     </div>
 <?php endforeach; ?>
     </div>
-    <div class="container new fields">
+    <!-- <div class="container new fields">
         <div>
             <input type="text" name="key<?php echo $i; ?>" placeholder="Add key" id="new_key">
         </div>
         <div>
             <input type="text" name="value<?php echo $i; ?>" placeholder="Add value">
         </div>
-    </div>
+    </div> -->
     <div class="container generate fields">
-        <div>
-            <input type="text" name="filename" placeholder="filename">
+        <input type="text" name="filename[0]" placeholder="prefix">
+        <span>_</span>
+        <input type="text" name="filename[1]" placeholder="index" value="00001">
+        <span>-</span>
+        <input type="text" name="filename[2]" placeholder="suffix">
+        <span>.txt</span>
+        <div style="margin-top: 0;">
+            <input type="checkbox" name="ai" id="ai"> <label for="ai"> increment</label>
         </div>
         <div>
-            .txt
-            <button type="submit" id="generate">Generate TXT</button><br/>
-            <input type="checkbox" name="clear" id="clear"> <label for="clear">Clear fields after download</label>
+            <button type="submit" id="generate">Generate TXT</button>
         </div>
+        <input type="checkbox" name="clear" id="clear"> <label for="clear">Clear fields after download</label>
     </div>
 </form>
 
@@ -155,47 +161,79 @@ foreach($values as $value) {
     <script type="text/javascript" src="js/main.js"></script>
 
     <script>
-        window.addEventListener('load', function() {
-            var loc = window.location;
-            currentPath = loc['origin']+loc['pathname'];
-            fields = <?php echo $i; ?>;
-            language = '<?php echo $lang; ?>';
-<?php foreach ($vals as $key => $values) :?>
-if ($('input[name="<?php echo $key; ?>"]').length && $('input[name="key<?php echo ($i-1); ?>"]').attr('id') != 'new_key')
-    var autocomplete<?php echo str_replace('value', '', $key); ?> = $('input[name="<?php echo $key; ?>"]').selectize({
-        delimiter: '|~|',
-        persist: true,
-        closeAfterSelect: true,
-        maxItems: null,
-        options: [
-            <?php foreach($values as $val): ?>
-            {text: '<?php echo $val; ?>', value: '<?php echo $val; ?>'},
-            <?php endforeach; ?>
-        ],create: function(input) {
-            // save to database
-            $('#loading').show();
-            var valKey = $(this)[0].$input[0].name;
-            $.ajax({
-                url: currentPath+'?ajax=insert_value',
-                method: 'POST',
-                dataType: 'json',
-                data: {
-                    lang: language,
-                    key: valKey,
-                    value: input
+    window.addEventListener('load', function() {
+        var loc = window.location;
+        currentPath = loc['origin']+loc['pathname'];
+        fields = <?php echo $i; ?>;
+        language = '<?php echo $lang; ?>';
+<?php foreach ($vals as $key => $values) : if ($key == 'valueFile') continue; ?>
+        if ($('input[name="<?php echo $key; ?>"]').length && $('input[name="key<?php echo ($i-1); ?>"]').attr('id') != 'new_key')
+            var autocomplete<?php echo str_replace('value', '', $key); ?> = $('input[name="<?php echo $key; ?>"]').selectize({
+                delimiter: '|~|',
+                persist: true,
+                closeAfterSelect: true,
+                maxItems: null,
+                options: [
+                    <?php foreach($values as $val): ?>
+                    {text: '<?php echo $val; ?>', value: '<?php echo $val; ?>'},
+                    <?php endforeach; ?>
+                ],create: function(input) {
+                    // save to database
+                    $('#loading').show();
+                    var valKey = $(this)[0].$input[0].name;
+                    $.ajax({
+                        url: currentPath+'?ajax=insert_value',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            lang: language,
+                            key: valKey,
+                            value: input
+                        }
+                    }).done(function() {
+                        $('#loading').hide();
+                    });
+                    return {
+                        value: input,
+                        text: input
+                    }
                 }
-            }).done(function() {
-                $('#loading').hide();
             });
-            return {
-                value: input,
-                text: input
-            }
-        }
-    });
-    autoc<?php echo str_replace('value', '', $key); ?> = autocomplete<?php echo str_replace('value', '', $key); ?>[0].selectize;
+        autoc<?php echo str_replace('value', '', $key); ?> = autocomplete<?php echo str_replace('value', '', $key); ?>[0].selectize;
 <?php endforeach; ?>
-});
+            var autocompleteFile = $('input[name="filename[0]"]').selectize({
+                delimiter: '|~|',
+                persist: true,
+                closeAfterSelect: true,
+                maxItems: null,
+                options: [
+                    <?php if (isset($vals['valueFile'])) foreach($vals['valueFile'] as $val): ?>
+                    {text: '<?php echo $val; ?>', value: '<?php echo $val; ?>'},
+                    <?php endforeach; ?>
+                ],create: function(input) {
+                    // save to database
+                    $('#loading').show();
+                    var valKey = 'valueFile';
+                    $.ajax({
+                        url: currentPath+'?ajax=insert_value',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            lang: language,
+                            key: valKey,
+                            value: input
+                        }
+                    }).done(function() {
+                        $('#loading').hide();
+                    });
+                    return {
+                        value: input,
+                        text: input
+                    }
+                }
+            });
+        autocFile = autocompleteFile[0].selectize;
+    });
     </script>
 </body>
 </html>

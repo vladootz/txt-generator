@@ -56,7 +56,7 @@ window.addEventListener('load', function() {
     $('#generate').on('click', function(e) {
         // check fields
         var error = false;
-        var filename = $('input[name="filename"]').val();
+        var filename = $('input[name="filename[0]"]').val();
         if (filename.trim() == '') {
             error = true;
             var msg = 'Please write a filename.';
@@ -71,14 +71,23 @@ window.addEventListener('load', function() {
         } else {
             setTimeout(function(){
                 if ($('#clear').prop('checked')) {
-                    $('input[name="filename"]').val('');
+                    $('input[name="filename[0]"]').val('');
+                    $('input[name="filename[2]"]').val('');
+                    eval('autocFile.clear()');
                     var i = 1;
+
                     while (i < fields) {
                         eval('autoc'+i+'.clear()');
                         i++;
                     }
                 }
-            }, 500);
+                if ($('#ai').prop('checked')) {
+                    var num = parseInt($('input[name="filename[1]"]').val());
+                    num++;
+                    num = ("0000"+num).slice(-5);
+                    $('input[name="filename[1]"]').val(num);
+                }
+            }, 200);
         }
     });
 })

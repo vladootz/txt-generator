@@ -65,6 +65,24 @@ input[type="text"] {
 
 .container + .generate {
     margin-top: 4rem;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.generate span {
+    line-height: 3;
+}
+
+.generate input {
+    display: inline-block;
+    width: auto;
+    margin-bottom: 0;
+}
+
+.generate > div {
+    text-align: center;
+    margin: 2rem auto 1rem;
 }
 
 #lang,
@@ -72,10 +90,22 @@ input[type="text"] {
     margin-left: 2rem;
 }
 
-#clear,
-#clear + label {
+.generate input[type="checkbox"],
+.generate input[type="checkbox"] + label {
     width: auto;
     display: inline-block;
+}
+
+.generate input[type="checkbox"] {
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.generate > div:nth-child(2) {
+    width: 157px;
+    display: inline-block;
+    margin: auto;
+    vertical-align: bottom;
 }
 
 .lds-dual-ring {
