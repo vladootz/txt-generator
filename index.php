@@ -142,7 +142,7 @@ $ver = '0.1';
         <span>_</span>
         <input type="text" name="filename[1]" placeholder="index" value="00001">
         <span>-</span>
-        <input type="text" name="filename[2]" placeholder="suffix">
+        <input type="text" name="filename[2]" placeholder="suffix" autocomplete="off">
         <span>.txt</span>
         <div style="margin-top: 0;">
             <input type="checkbox" name="ai" id="ai"> <label for="ai"> increment</label>
