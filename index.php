@@ -3,7 +3,7 @@ if (isset($_POST['download']) && $_POST['download'] === 'file') {
 
     $filename = $_POST['filename'][0].'_'.$_POST['filename'][1].'-'.$_POST['filename'][2];
     $i = 1;
-    $total_fields = (count($_POST)-3)/2;
+    $total_fields = (count($_POST)-1)/2;
     $txt = '';
     while ($i < $total_fields) {
         $j = $i > 9 ? $i : ' '.$i;
