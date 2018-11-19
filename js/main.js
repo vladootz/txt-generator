@@ -20,8 +20,8 @@ window.addEventListener('load', function() {
     });
 
     // insert new key
-    $('#new_key').on('keyup', function(e) {
-        if (e.keyCode === 13) {
+    $('#new_key').on('blur', function(e) {
+        if ($(this).val() != '') {
             // clone
             $(this).removeAttr('id');
             $(this).parent().parent().removeClass('new');
@@ -48,6 +48,33 @@ window.addEventListener('load', function() {
                 }
             }).done(function() {
                 $('#loading').hide();
+            });
+        } else {
+            // remove?
+        }
+    });
+
+    // update existing key
+    $('input[name^="key"').each(function() {
+        if ($(this).attr('id') != 'new_key') {
+            $(this).on('blur', function() {
+                if ($(this).val() != '') {
+                    var thisKey = $(this).attr('name');
+                    var updateKey = $(this).val();
+                    $('#loading').show();
+                    $.ajax({
+                        url: currentPath+'?ajax=update_key',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            lang: language,
+                            key: thisKey,
+                            value: updateKey
+                        }
+                    }).done(function() {
+                        $('#loading').hide();
+                    });
+                }
             });
         }
     });

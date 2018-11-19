@@ -33,13 +33,22 @@ if (isset($_COOKIE['lang']) && in_array($_COOKIE['lang'], ['ro', 'en'])) {
 // ajax functions
 if (isset($_GET['ajax'])) {
     if ($_GET['ajax'] === 'insert_key') {
-
         // insert key
         DB::insert('keys', array(
             'lang' => $_POST['lang'],
             'key' => $_POST['key'],
             'value' => $_POST['value'],
         ));
+        echo json_encode(['status' => 'success']);
+    }
+    if ($_GET['ajax'] === 'update_key') {
+        // insert key
+        DB::update('keys',
+            array(
+                'value' => $_POST['value']
+            ),
+            "`key`=%s AND `lang`=%s", $_POST['key'], $_POST['lang']
+        );
         echo json_encode(['status' => 'success']);
     }
     if ($_GET['ajax'] === 'insert_value') {
@@ -76,7 +85,7 @@ foreach($values as $value) {
     $vals[$value['key']][] = $value['value'];
 }
 
-$ver = '0.1';
+$ver = '0.2.0';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,7 +209,8 @@ $ver = '0.1';
                     }
                 }
             });
-        autoc<?php echo str_replace('value', '', $key); ?> = autocomplete<?php echo str_replace('value', '', $key); ?>[0].selectize;
+        if (typeof autocomplete<?php echo str_replace('value', '', $key); ?> != 'undefined')
+            autoc<?php echo str_replace('value', '', $key); ?> = autocomplete<?php echo str_replace('value', '', $key); ?>[0].selectize;
 <?php endforeach; ?>
             var autocompleteFile = $('input[name="filename[0]"]').selectize({
                 delimiter: '|~|',
