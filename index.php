@@ -185,7 +185,7 @@ $ver = '0.2.0';
                 maxItems: null,
                 options: [
                     <?php foreach($values as $val): ?>
-                    {text: '<?php echo $val; ?>', value: '<?php echo $val; ?>'},
+                    {text: '<?php echo addslashes($val); ?>', value: '<?php echo addslashes($val); ?>'},
                     <?php endforeach; ?>
                 ],create: function(input) {
                     // save to database
