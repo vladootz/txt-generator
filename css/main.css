@@ -43,7 +43,8 @@ input[type="text"] {
     text-align: left;
     width: 300px;
 }
-.fields > div input {
+.fields > div input,
+.fields > div textarea {
     width: 100%;
 }
 

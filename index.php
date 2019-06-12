@@ -9,8 +9,12 @@ if (isset($_POST['download']) && $_POST['download'] === 'file') {
         $j = $i > 9 ? $i : ' '.$i;
         $key = isset($_POST['key'.$i]) ? $_POST['key'.$i] : '';
         $value = str_replace('|~|', ', ', $_POST['value'.$i]);
-        if (strlen($key))
+        if ($i == 5) {
+            $value = str_replace(PHP_EOL, PHP_EOL."    ", $value);
+        }
+        if (strlen($key)) {
             $txt .= $j . ". " . $key . ": " . $value . "\n";
+        }
         $i++;
     }
 
@@ -85,7 +89,7 @@ foreach($values as $value) {
     $vals[$value['key']][] = $value['value'];
 }
 
-$ver = '0.2.0';
+$ver = '0.2.1';
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +137,11 @@ $ver = '0.2.0';
             <input type="text" name="<?php echo $key['key']; ?>" value="<?php echo $key['value']; ?>" tabindex="1<?php echo $i; ?>">
         </div>
         <div>
+            <?php if ($i == 5) { ?>
+            <textarea rows="5" name="value<?php echo $i; ?>" tabindex="<?php echo $i; $i++; ?>"></textarea>
+            <?php } else { ?>
             <input type="text" name="value<?php echo $i; ?>" tabindex="<?php echo $i; $i++; ?>">
+            <?php } ?>
         </div>
     </div>
 <?php endforeach; ?>
